@@ -30,8 +30,8 @@ public class DungeonView extends View implements Runnable {
 
     @Override
     public void run() {
-        handler.postDelayed(this, 30);
+        //handler.postDelayed(this, 30);
         //Update(); <-- Do it Later;
-        invalidate();
+        //invalidate();
     }
 }
