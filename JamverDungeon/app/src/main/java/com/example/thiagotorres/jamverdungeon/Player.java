@@ -9,14 +9,30 @@ import android.graphics.Rect;
  */
 public class Player {
 
+    private int posX, posY;
 
+    public void setPosX(int position) {
+        this.posX = position;
+    }
+
+    public void setPosY(int position) {
+        this.posY = position;
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
 
     public Player(){
 
     }
 
     void DrawPlayer(Canvas canvas){
-        Rect r = new Rect(0, 0, 50, 50);
+        Rect r = new Rect(posX, posY, 50, 50);
         Paint p = new Paint();
         canvas.drawRect(r, p);
     }
