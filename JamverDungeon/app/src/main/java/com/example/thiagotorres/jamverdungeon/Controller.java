@@ -16,7 +16,8 @@ public class Controller {
     private Bitmap image;
     private String direction;
     private Paint paint = new Paint();
-    private int canvasWidth, canvasHeight, posX, posY;
+    private int posX;
+    private int posY;
 
     public Controller(Bitmap bitmap, String pointing) {
         image = bitmap;
@@ -36,8 +37,8 @@ public class Controller {
     }
 
     void drawController(Canvas canvas){
-        canvasWidth = canvas.getWidth();
-        canvasHeight = canvas.getHeight();
+        int canvasWidth = canvas.getWidth();
+        int canvasHeight = canvas.getHeight();
         Matrix mat = new Matrix();
         switch (direction){
             case "up":

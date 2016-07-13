@@ -32,7 +32,7 @@ public class Player {
     }
 
     void DrawPlayer(Canvas canvas){
-        Rect r = new Rect(posX, posY, 50, 50);
+        Rect r = new Rect(posX, posY, posX + 50, posY + 50);
         Paint p = new Paint();
         canvas.drawRect(r, p);
     }

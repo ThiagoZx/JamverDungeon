@@ -71,13 +71,14 @@ public class DungeonView extends View implements Runnable {
                     if (x >= controllers.get(i).getAxis("x") && x < (controllers.get(i).getAxis("x") + controllers.get(i).getSize("width"))
                             && y >= controllers.get(i).getAxis("y") && y < (controllers.get(i).getAxis("y") + controllers.get(i).getSize("height"))) {
                         controllers.get(i).movePlayerTo(character);
+                        return true;
                     }
                 }
 
                 break;
         }
 
-        return true;
+        return false;
     }
 
     @Override
