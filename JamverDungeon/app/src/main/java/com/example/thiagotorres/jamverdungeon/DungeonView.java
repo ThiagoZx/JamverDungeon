@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,9 @@ import java.util.List;
  */
 public class DungeonView extends View implements Runnable {
 
+
+    //Context oooh
+    Context context;
 
     //Manager
     private Handler handler;
@@ -31,6 +35,8 @@ public class DungeonView extends View implements Runnable {
         super(context);
         handler = new Handler();
         handler.post(this);
+
+        this.context = context;
 
         Start();
     }
@@ -71,6 +77,13 @@ public class DungeonView extends View implements Runnable {
                     if (x >= controllers.get(i).getAxis("x") && x < (controllers.get(i).getAxis("x") + controllers.get(i).getSize("width"))
                             && y >= controllers.get(i).getAxis("y") && y < (controllers.get(i).getAxis("y") + controllers.get(i).getSize("height"))) {
                         controllers.get(i).movePlayerTo(character);
+
+                        //Use this to show to the player that doors are locked, that he got the key, to look the map itself, etc.
+                        CharSequence text = "Hello toast!";
+                        int duration = Toast.LENGTH_LONG;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+
                         return true;
                     }
                 }
