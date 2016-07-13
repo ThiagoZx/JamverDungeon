@@ -2,8 +2,10 @@ package com.example.thiagotorres.jamverdungeon;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 /**
  * Created by Thiago on 11/07/2016.
@@ -45,21 +47,25 @@ public class Controller {
                 mat.postRotate(180);
                 posX = (canvasWidth / 2) - image.getWidth() / 2;
                 posY = canvasHeight - image.getHeight() * 2;
+                this.changeArrowColor(Color.GREEN);
                 break;
             case "down":
                 mat.postRotate(0);
                 posX = (canvasWidth / 2) - image.getWidth() / 2;
                 posY = canvasHeight - image.getHeight();
+                this.changeArrowColor(Color.RED);
                 break;
             case "left":
                 mat.postRotate(90);
                 posX = (canvasWidth / 2) - image.getWidth() - image.getWidth() / 2;
                 posY = canvasHeight - image.getHeight();
+                this.changeArrowColor(Color.BLUE);
                 break;
             case "right":
                 mat.postRotate(270);
                 posX = (canvasWidth / 2) + image.getWidth() / 2;
                 posY = canvasHeight - image.getHeight();
+                this.changeArrowColor(Color.YELLOW);
                 break;
 
         }
@@ -83,5 +89,18 @@ public class Controller {
                 character.setPosX(character.getPosX() + 50);
                 break;
         }
+    }
+
+    void changeArrowColor(int color){
+        int [] imagePixels = new int [image.getHeight() * image.getWidth()];
+        image.getPixels(imagePixels, 0, image.getWidth(), 0, 0, image.getWidth(), image.getHeight());
+        for(int i = 0; i < imagePixels.length; i++) {
+            if(imagePixels[i] == Color.BLACK) {
+                imagePixels[i] = color;
+            }
+        }
+
+        image.setPixels(imagePixels, 0, image.getWidth(), 0, 0, image.getWidth(), image.getHeight());
+
     }
 }
