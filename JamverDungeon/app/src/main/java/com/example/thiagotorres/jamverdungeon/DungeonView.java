@@ -30,6 +30,7 @@ public class DungeonView extends View implements Runnable {
     //Listas
     List<Controller> controllers;
     List<Grid> bar;
+    List<Command> commands;
 
     public DungeonView(Context context) {
 
@@ -45,6 +46,7 @@ public class DungeonView extends View implements Runnable {
     void Start() {
         controllers = new ArrayList<>();
         bar = new ArrayList<>();
+        commands = new ArrayList<>();
 
 
         for (int i = 0; i < 4; i++) {
@@ -54,13 +56,25 @@ public class DungeonView extends View implements Runnable {
 
     }
 
+    void Update(){
+        for (int i = 0; i < commands.size(); i++) {
+            commands.get(i).updateCommand();
+            if (commands.get(i).deleteCommand()){
+                commands.remove(i);
+            }
+        }
+    }
+
     @Override
     protected void onDraw(Canvas canvas){
-
 
         for (int i = 0; i < 4; i++){
             controllers.get(i).drawController(canvas);
             bar.get(i).drawGrid(canvas);
+        }
+
+        for (int i = 0; i < commands.size(); i++) {
+            commands.get(i).drawCommand(canvas);
         }
 
         super.onDraw(canvas);
@@ -78,6 +92,9 @@ public class DungeonView extends View implements Runnable {
                 for (int i = 0; i < controllers.size(); i++){
                     if (x >= controllers.get(i).getAxis("x") && x < (controllers.get(i).getAxis("x") + controllers.get(i).getSize("width"))
                             && y >= controllers.get(i).getAxis("y") && y < (controllers.get(i).getAxis("y") + controllers.get(i).getSize("height"))) {
+
+                        commands.add(commands.size(), new Command(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), i));
+
 
                         //Use this to show to the player that doors are locked, that he got the key, to look the map itself, etc.
                         CharSequence text = "Hello toast!";
@@ -98,7 +115,7 @@ public class DungeonView extends View implements Runnable {
     @Override
     public void run() {
         handler.postDelayed(this, 30);
-        //Update(); <-- Do it Later;
+        Update();
         invalidate();
     }
 }
