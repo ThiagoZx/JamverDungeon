@@ -8,63 +8,47 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 /**
- * Created by Thiago on 11/07/2016.
+ * Created by Thiago.Torres on 11/07/2016.
  */
-public class Controller {
+public class Grid {
 
-    //If there is some time remaining, adjust the size of the arrows to always have the same size in
-    //every phone, would ya? Kay;
-
+    private int posX, posY;
     private Bitmap image;
     private int direction;
     private Paint paint = new Paint();
-    private int posX;
-    private int posY;
 
-    public Controller(Bitmap bitmap, int pointing) {
+    public Grid(Bitmap bitmap, int pointing){
         image = bitmap;
         direction = pointing;
     }
 
-    int getAxis(String axis){
-        if (axis.equals("x")){return posX;}
-        if (axis.equals("y")){return posY;}
-        return 0;
-    }
-
-    int getSize(String dimension){
-        if (dimension.equals("width")){return image.getWidth();}
-        if (dimension.equals("height")){return image.getHeight();}
-        return 0;
-    }
-
-    void drawController(Canvas canvas){
+    void drawGrid(Canvas canvas) {
         int canvasWidth = canvas.getWidth();
         int canvasHeight = canvas.getHeight();
         Matrix mat = new Matrix();
         switch (direction){
             case 0:
                 mat.postRotate(0);
-                posX = (canvasWidth / 2) - image.getWidth() / 2;
-                posY = canvasHeight - image.getHeight();
+                posX = (canvasWidth / 20);
+                posY = (canvasHeight / 2) + image.getHeight();
                 this.changeArrowColor(Color.RED);
             break;
             case 1:
                 mat.postRotate(90);
-                posX = (canvasWidth / 2) - image.getWidth() - image.getWidth() / 2;
-                posY = canvasHeight - image.getHeight();
+                posX = (canvasWidth / 20);
+                posY = (canvasHeight / 2);
                 this.changeArrowColor(Color.BLUE);
             break;
             case 2:
                 mat.postRotate(180);
-                posX = (canvasWidth / 2) - image.getWidth() / 2;
-                posY = canvasHeight - image.getHeight() * 2;
+                posX = (canvasWidth / 20);
+                posY = (canvasHeight / 2) - image.getHeight() * 2;
                 this.changeArrowColor(Color.GREEN);
-            break;
+                break;
             case 3:
                 mat.postRotate(270);
-                posX = (canvasWidth / 2) + image.getWidth() / 2;
-                posY = canvasHeight - image.getHeight();
+                posX = (canvasWidth / 20);
+                posY = (canvasHeight / 2) - image.getHeight();
                 this.changeArrowColor(Color.YELLOW);
             break;
 
@@ -86,4 +70,5 @@ public class Controller {
         image.setPixels(imagePixels, 0, image.getWidth(), 0, 0, image.getWidth(), image.getHeight());
 
     }
+
 }

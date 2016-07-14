@@ -18,17 +18,18 @@ import java.util.List;
 public class DungeonView extends View implements Runnable {
 
 
-    //Context oooh
+    //Context
     Context context;
 
     //Manager
     private Handler handler;
 
     //Test stuff
-    Player character;
+    Grid character;
 
     //Listas
     List<Controller> controllers;
+    List<Grid> bar;
 
     public DungeonView(Context context) {
 
@@ -43,22 +44,23 @@ public class DungeonView extends View implements Runnable {
 
     void Start() {
         controllers = new ArrayList<>();
+        bar = new ArrayList<>();
 
-        controllers.add(controllers.size(), new Controller(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), "up"));
-        controllers.add(controllers.size(), new Controller(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), "down"));
-        controllers.add(controllers.size(), new Controller(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), "left"));
-        controllers.add(controllers.size(), new Controller(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), "right"));
 
-        character = new Player();
+        for (int i = 0; i < 4; i++) {
+            controllers.add(controllers.size(), new Controller(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), i));
+            bar.add(bar.size(), new Grid(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), i));
+        }
+
     }
 
     @Override
     protected void onDraw(Canvas canvas){
 
-        character.DrawPlayer(canvas);
 
-        for (int i = 0; i < controllers.size(); i++){
+        for (int i = 0; i < 4; i++){
             controllers.get(i).drawController(canvas);
+            bar.get(i).drawGrid(canvas);
         }
 
         super.onDraw(canvas);
@@ -76,7 +78,6 @@ public class DungeonView extends View implements Runnable {
                 for (int i = 0; i < controllers.size(); i++){
                     if (x >= controllers.get(i).getAxis("x") && x < (controllers.get(i).getAxis("x") + controllers.get(i).getSize("width"))
                             && y >= controllers.get(i).getAxis("y") && y < (controllers.get(i).getAxis("y") + controllers.get(i).getSize("height"))) {
-                        controllers.get(i).movePlayerTo(character);
 
                         //Use this to show to the player that doors are locked, that he got the key, to look the map itself, etc.
                         CharSequence text = "Hello toast!";
