@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 /**
  * Created by Thiago on 14/07/2016.
@@ -16,6 +17,7 @@ public class Command {
     private int direction;
     private Paint paint = new Paint();
     private boolean posSet;
+    public Rect body;
 
     public Command(Bitmap bitmap, int pointing){
         image = bitmap;
@@ -89,6 +91,7 @@ public class Command {
 
     void updateCommand(){
         this.posX = posX - 10;
+        body.set(posX, posY, posX + image.getWidth(), posY + image.getHeight());
     }
 
     boolean deleteCommand() {

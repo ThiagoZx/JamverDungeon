@@ -16,6 +16,7 @@ public class Grid {
     private Bitmap image;
     private int direction;
     private Paint paint = new Paint();
+    public Rect body;
 
     public Grid(Bitmap bitmap, int pointing){
         image = bitmap;
@@ -73,6 +74,10 @@ public class Grid {
 
         image.setPixels(imagePixels, 0, image.getWidth(), 0, 0, image.getWidth(), image.getHeight());
 
+    }
+
+    void updateGrid(){
+        body.set(posX, posY, posX + image.getWidth(), posY + image.getHeight());
     }
 
 }

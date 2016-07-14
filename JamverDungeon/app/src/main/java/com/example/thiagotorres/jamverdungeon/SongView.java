@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by Thiago.Torres on 08/07/2016
  */
-public class DungeonView extends View implements Runnable {
+public class SongView extends View implements Runnable {
 
 
     //Context
@@ -24,15 +24,18 @@ public class DungeonView extends View implements Runnable {
     //Manager
     private Handler handler;
 
-    //Test stuff
-    Grid character;
+    //Time measure
+    long lastTime;
+
+    //Note test
+    int currNote;
 
     //Listas
     List<Controller> controllers;
     List<Grid> bar;
     List<Command> commands;
 
-    public DungeonView(Context context) {
+    public SongView(Context context) {
 
         super(context);
         handler = new Handler();
@@ -41,6 +44,17 @@ public class DungeonView extends View implements Runnable {
         this.context = context;
 
         Start();
+    }
+
+    void sendNote() {
+        long currTime = System.currentTimeMillis();
+        if (currTime - lastTime > 1000){
+            commands.add(commands.size(), new Command(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), currNote));
+            lastTime = currTime;
+            currNote++;
+        } else if ( currNote > 3){
+            currNote = 0;
+        }
     }
 
     void Start() {
@@ -57,6 +71,7 @@ public class DungeonView extends View implements Runnable {
     }
 
     void Update(){
+        sendNote();
         for (int i = 0; i < commands.size(); i++) {
             commands.get(i).updateCommand();
             if (commands.get(i).deleteCommand()){
@@ -93,7 +108,6 @@ public class DungeonView extends View implements Runnable {
                     if (x >= controllers.get(i).getAxis("x") && x < (controllers.get(i).getAxis("x") + controllers.get(i).getSize("width"))
                             && y >= controllers.get(i).getAxis("y") && y < (controllers.get(i).getAxis("y") + controllers.get(i).getSize("height"))) {
 
-                        commands.add(commands.size(), new Command(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), i));
 
 
                         /*Use this to show to the player that doors are locked, that he got the key, to look the map itself, etc.
