@@ -13,7 +13,7 @@ import java.util.List;
 
 
 /**
- * Created by Thiago.Torres on 08/07/2016.
+ * Created by Thiago.Torres on 08/07/2016
  */
 public class DungeonView extends View implements Runnable {
 
@@ -96,20 +96,20 @@ public class DungeonView extends View implements Runnable {
                         commands.add(commands.size(), new Command(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), i));
 
 
-                        //Use this to show to the player that doors are locked, that he got the key, to look the map itself, etc.
+                        /*Use this to show to the player that doors are locked, that he got the key, to look the map itself, etc.
                         CharSequence text = "Hello toast!";
                         int duration = Toast.LENGTH_LONG;
                         Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
+                        toast.show();*/
 
-                        return true;
+
                     }
                 }
 
                 break;
         }
 
-        return false;
+        return true;
     }
 
     @Override

@@ -49,18 +49,22 @@ public class Command {
         switch (direction){
             case 0:
                 mat.postRotate(0);
+                image = image.copy(image.getConfig(), true);
                 this.changeArrowColor(Color.RED);
                 break;
             case 1:
                 mat.postRotate(90);
+                image = image.copy(image.getConfig(), true);
                 this.changeArrowColor(Color.BLUE);
                 break;
             case 2:
                 mat.postRotate(180);
+                image = image.copy(image.getConfig(), true);
                 this.changeArrowColor(Color.GREEN);
                 break;
             case 3:
                 mat.postRotate(270);
+                image = image.copy(image.getConfig(), true);
                 this.changeArrowColor(Color.YELLOW);
                 break;
 
@@ -88,7 +92,7 @@ public class Command {
     }
 
     boolean deleteCommand() {
-        if (posX - image.getWidth() < 0) { return true; }
+        if (posX + image.getWidth() < 0) { return true; }
         return false;
     }
 }

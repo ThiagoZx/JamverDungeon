@@ -8,7 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 /**
- * Created by Thiago.Torres on 11/07/2016.
+ * Created by Thiago.Torres on 11/07/2016
  */
 public class Grid {
 
@@ -31,24 +31,28 @@ public class Grid {
                 mat.postRotate(0);
                 posX = (canvasWidth / 20);
                 posY = (canvasHeight / 2) + image.getHeight();
+                image = image.copy(image.getConfig(), true);
                 this.changeArrowColor(Color.RED);
             break;
             case 1:
                 mat.postRotate(90);
                 posX = (canvasWidth / 20);
                 posY = (canvasHeight / 2);
+                image = image.copy(image.getConfig(), true);
                 this.changeArrowColor(Color.BLUE);
             break;
             case 2:
                 mat.postRotate(180);
                 posX = (canvasWidth / 20);
                 posY = (canvasHeight / 2) - image.getHeight() * 2;
+                image = image.copy(image.getConfig(), true);
                 this.changeArrowColor(Color.GREEN);
                 break;
             case 3:
                 mat.postRotate(270);
                 posX = (canvasWidth / 20);
                 posY = (canvasHeight / 2) - image.getHeight();
+                image = image.copy(image.getConfig(), true);
                 this.changeArrowColor(Color.YELLOW);
             break;
 
