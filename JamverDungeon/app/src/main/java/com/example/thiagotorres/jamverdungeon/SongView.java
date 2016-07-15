@@ -1,16 +1,18 @@
 package com.example.thiagotorres.jamverdungeon;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -28,8 +30,12 @@ public class SongView extends View implements Runnable {
     //Time measure
     long lastTime;
 
-    //Note test
-    int currNote;
+    //GameOver button
+    Button a = new Button();
+    boolean b = false;
+
+    //Media Stuff
+    MediaPlayer song;
 
     //Listas
     List<Controller> controllers;
@@ -45,16 +51,26 @@ public class SongView extends View implements Runnable {
         this.context = context;
 
         Start();
+
+    }
+
+    void gameOver() {
+
+        //Make the button that will first allow this. When you click that button, well...
+
+        Intent sendIntent = new Intent();
+        sendIntent.setAction("JAMV");
+        sendIntent.putExtra("letter", "Q0");
+        context.startActivity(sendIntent);
     }
 
     void sendNote() {
         long currTime = System.currentTimeMillis();
+        Random r = new Random();
+        int note = r.nextInt(4);
         if (currTime - lastTime > 1000){
-            commands.add(commands.size(), new Command(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), currNote));
+            commands.add(commands.size(), new Command(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), note));
             lastTime = currTime;
-            currNote++;
-        } else if ( currNote > 3){
-            currNote = 0;
         }
     }
 
@@ -71,21 +87,21 @@ public class SongView extends View implements Runnable {
         bar = new ArrayList<>();
         commands = new ArrayList<>();
 
+        song = MediaPlayer.create(context, R.raw.chickenlegs);
+        song.start();
+        //song.release();
+        //song.reset();
 
         for (int i = 0; i < 4; i++) {
             controllers.add(controllers.size(), new Controller(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), i));
             bar.add(bar.size(), new Grid(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), i));
         }
-
     }
 
     void Update(){
-        sendNote();
-
         for (int i = 0; i < bar.size(); i++) {
             bar.get(i).updateGrid();
         }
-
 
         for (int i = 0; i < commands.size(); i++) {
             commands.get(i).updateCommand();
@@ -97,6 +113,13 @@ public class SongView extends View implements Runnable {
 
     @Override
     protected void onDraw(Canvas canvas){
+
+        if (song.isPlaying()){
+            sendNote();
+        } else {
+            a.DrawButton(canvas);
+            b = true;
+        }
 
         for (int i = 0; i < 4; i++){
             controllers.get(i).drawController(canvas);
@@ -126,6 +149,10 @@ public class SongView extends View implements Runnable {
                     }
                 }
 
+                if (b){
+                    gameOver();
+                }
+
                 break;
         }
 
@@ -137,5 +164,6 @@ public class SongView extends View implements Runnable {
         handler.postDelayed(this, 30);
         Update();
         invalidate();
+
     }
 }
