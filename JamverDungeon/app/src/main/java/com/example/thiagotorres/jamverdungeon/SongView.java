@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -20,7 +21,6 @@ import java.util.Random;
  */
 public class SongView extends View implements Runnable {
 
-
     //Context
     Context context;
 
@@ -31,8 +31,8 @@ public class SongView extends View implements Runnable {
     long lastTime;
 
     //GameOver button
-    Button a = new Button();
-    boolean b = false;
+    Button intentButton = new Button();
+    boolean songOver = false;
 
     //Media Stuff
     MediaPlayer song;
@@ -41,6 +41,9 @@ public class SongView extends View implements Runnable {
     List<Controller> controllers;
     List<Grid> bar;
     List<Command> commands;
+
+    //Canvas width, height
+    int canvasWidth, canvasHeight;
 
     public SongView(Context context) {
 
@@ -76,7 +79,8 @@ public class SongView extends View implements Runnable {
 
     void destroyNote(int note) {
         for (int i = 0; i < commands.size(); i++) {
-            if (Rect.intersects(commands.get(i).body, bar.get(note).body) && commands.get(i).getDirection() == note) {
+            System.out.println(commands.get(i) + " | " + commands.get(i).body);
+            if (commands.get(i) != null && commands.get(i).body != null && Rect.intersects(commands.get(i).body, bar.get(note).body) && commands.get(i).getDirection() == note) {
                 commands.remove(i);
             }
         }
@@ -91,7 +95,7 @@ public class SongView extends View implements Runnable {
         song.start();
         //song.release();
         //song.reset();
-
+        
         for (int i = 0; i < 4; i++) {
             controllers.add(controllers.size(), new Controller(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), i));
             bar.add(bar.size(), new Grid(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), i));
@@ -114,11 +118,14 @@ public class SongView extends View implements Runnable {
     @Override
     protected void onDraw(Canvas canvas){
 
+        canvasHeight = canvas.getHeight();
+        canvasWidth = canvas.getWidth();
+
         if (song.isPlaying()){
             sendNote();
         } else {
-            a.DrawButton(canvas);
-            b = true;
+            intentButton.DrawButton(canvas);
+            songOver = true;
         }
 
         for (int i = 0; i < 4; i++){
@@ -149,7 +156,7 @@ public class SongView extends View implements Runnable {
                     }
                 }
 
-                if (b){
+                if (songOver == true && x > canvasWidth / 2 - 50 && x < canvasWidth / 2 + 50 && y > 50 && y < 100){
                     gameOver();
                 }
 

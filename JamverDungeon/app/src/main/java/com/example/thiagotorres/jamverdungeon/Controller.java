@@ -75,7 +75,7 @@ public class Controller {
         }
 
         Bitmap rotateImage = Bitmap.createBitmap(image, 0, 0, image.getWidth(), image.getHeight(), mat, true);
-        canvas.drawBitmap(rotateImage, posX, posY, paint);
+        canvas.drawBitmap(rotateImage, posX, posY, null);
     }
 
     void changeArrowColor(int color){
