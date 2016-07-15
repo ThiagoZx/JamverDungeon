@@ -3,6 +3,7 @@ package com.example.thiagotorres.jamverdungeon;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
@@ -57,6 +58,14 @@ public class SongView extends View implements Runnable {
         }
     }
 
+    void destroyNote(int note) {
+        for (int i = 0; i < commands.size(); i++) {
+            if (Rect.intersects(commands.get(i).body, bar.get(note).body) && commands.get(i).getDirection() == note) {
+                commands.remove(i);
+            }
+        }
+    }
+
     void Start() {
         controllers = new ArrayList<>();
         bar = new ArrayList<>();
@@ -72,6 +81,12 @@ public class SongView extends View implements Runnable {
 
     void Update(){
         sendNote();
+
+        for (int i = 0; i < bar.size(); i++) {
+            bar.get(i).updateGrid();
+        }
+
+
         for (int i = 0; i < commands.size(); i++) {
             commands.get(i).updateCommand();
             if (commands.get(i).deleteCommand()){
@@ -107,16 +122,7 @@ public class SongView extends View implements Runnable {
                 for (int i = 0; i < controllers.size(); i++){
                     if (x >= controllers.get(i).getAxis("x") && x < (controllers.get(i).getAxis("x") + controllers.get(i).getSize("width"))
                             && y >= controllers.get(i).getAxis("y") && y < (controllers.get(i).getAxis("y") + controllers.get(i).getSize("height"))) {
-
-
-
-                        /*Use this to show to the player that doors are locked, that he got the key, to look the map itself, etc.
-                        CharSequence text = "Hello toast!";
-                        int duration = Toast.LENGTH_LONG;
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();*/
-
-
+                        destroyNote(i);
                     }
                 }
 

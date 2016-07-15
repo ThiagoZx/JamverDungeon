@@ -77,6 +77,7 @@ public class Grid {
     }
 
     void updateGrid(){
+        body = new Rect();
         body.set(posX, posY, posX + image.getWidth(), posY + image.getHeight());
     }
 

@@ -25,6 +25,10 @@ public class Command {
         posSet = false;
     }
 
+    public int getDirection() {
+        return direction;
+    }
+
     void setPos(Canvas canvas){
         posSet = true;
         posX = canvas.getWidth();
@@ -73,7 +77,6 @@ public class Command {
         }
         Bitmap rotateImage = Bitmap.createBitmap(image, 0, 0, image.getWidth(), image.getHeight(), mat, true);
         canvas.drawBitmap(rotateImage, posX, posY, paint);
-        System.out.println(posX + "||" + posY);
     }
 
     void changeArrowColor(int color){
@@ -91,6 +94,7 @@ public class Command {
 
     void updateCommand(){
         this.posX = posX - 10;
+        body = new Rect();
         body.set(posX, posY, posX + image.getWidth(), posY + image.getHeight());
     }
 
