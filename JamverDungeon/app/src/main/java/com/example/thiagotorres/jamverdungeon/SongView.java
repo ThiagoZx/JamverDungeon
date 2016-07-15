@@ -30,7 +30,7 @@ public class SongView extends View implements Runnable {
     long lastTime;
 
     //GameOver button
-    Background background = new Background();
+    Background background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.chickenlegsart));
     boolean songOver = false;
 
     //Media Stuff
@@ -88,9 +88,7 @@ public class SongView extends View implements Runnable {
         commands = new ArrayList<>();
 
         song = MediaPlayer.create(context, R.raw.chickenlegs);
-        song.start();
-        //song.release();
-        //song.reset();
+        //song.start(); //<-- Un-comment this!
 
         for (int i = 0; i < 4; i++) {
             controllers.add(controllers.size(), new Controller(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), i));
@@ -116,6 +114,7 @@ public class SongView extends View implements Runnable {
 
         canvasHeight = canvas.getHeight();
         canvasWidth = canvas.getWidth();
+        background.DrawBackground(canvas);
 
         if (song.isPlaying()){
             sendNote();
@@ -152,7 +151,7 @@ public class SongView extends View implements Runnable {
                     }
                 }
 
-                if (songOver == true && x > canvasWidth / 2 - 200 && x < canvasWidth / 2 + 200 && y > 50 && y < 150){
+                if (songOver == true && x > canvasWidth / 2 && x < canvasWidth / 2 + 200 && y > 50 && y < 150){
                     gameOver();
                 }
 

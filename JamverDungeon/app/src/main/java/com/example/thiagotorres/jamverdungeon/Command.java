@@ -15,7 +15,6 @@ public class Command {
     private int posX, posY;
     private Bitmap image;
     private int direction;
-    private Paint paint = new Paint();
     private boolean posSet;
     public Rect body;
 

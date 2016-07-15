@@ -15,7 +15,6 @@ public class Grid {
     private int posX, posY;
     private Bitmap image;
     private int direction;
-    private Paint paint = new Paint();
     public Rect body;
 
     public Grid(Bitmap bitmap, int pointing){
