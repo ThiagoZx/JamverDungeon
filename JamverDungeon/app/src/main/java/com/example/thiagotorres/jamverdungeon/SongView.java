@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -31,7 +30,7 @@ public class SongView extends View implements Runnable {
     long lastTime;
 
     //GameOver button
-    Button intentButton = new Button();
+    Background background = new Background();
     boolean songOver = false;
 
     //Media Stuff
@@ -58,9 +57,6 @@ public class SongView extends View implements Runnable {
     }
 
     void gameOver() {
-
-        //Make the button that will first allow this. When you click that button, well...
-
         Intent sendIntent = new Intent();
         sendIntent.setAction("JAMV");
         sendIntent.putExtra("letter", "Q0");
@@ -95,7 +91,7 @@ public class SongView extends View implements Runnable {
         song.start();
         //song.release();
         //song.reset();
-        
+
         for (int i = 0; i < 4; i++) {
             controllers.add(controllers.size(), new Controller(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), i));
             bar.add(bar.size(), new Grid(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), i));
@@ -124,7 +120,7 @@ public class SongView extends View implements Runnable {
         if (song.isPlaying()){
             sendNote();
         } else {
-            intentButton.DrawButton(canvas);
+            background.DrawButton(canvas);
             songOver = true;
         }
 
@@ -156,7 +152,7 @@ public class SongView extends View implements Runnable {
                     }
                 }
 
-                if (songOver == true && x > canvasWidth / 2 - 50 && x < canvasWidth / 2 + 50 && y > 50 && y < 100){
+                if (songOver == true && x > canvasWidth / 2 - 200 && x < canvasWidth / 2 + 200 && y > 50 && y < 150){
                     gameOver();
                 }
 
