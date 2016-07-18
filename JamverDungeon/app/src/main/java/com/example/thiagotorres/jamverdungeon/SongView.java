@@ -75,7 +75,6 @@ public class SongView extends View implements Runnable {
 
     void destroyNote(int note) {
         for (int i = 0; i < commands.size(); i++) {
-            System.out.println(commands.get(i) + " | " + commands.get(i).body);
             if (commands.get(i) != null && commands.get(i).body != null && Rect.intersects(commands.get(i).body, bar.get(note).body) && commands.get(i).getDirection() == note) {
                 commands.remove(i);
             }
@@ -88,7 +87,7 @@ public class SongView extends View implements Runnable {
         commands = new ArrayList<>();
 
         song = MediaPlayer.create(context, R.raw.chickenlegs);
-        //song.start(); //<-- Un-comment this!
+        song.start();
 
         for (int i = 0; i < 4; i++) {
             controllers.add(controllers.size(), new Controller(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), i));
@@ -166,6 +165,5 @@ public class SongView extends View implements Runnable {
         handler.postDelayed(this, 30);
         Update();
         invalidate();
-
     }
 }

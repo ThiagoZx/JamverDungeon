@@ -27,6 +27,7 @@ public class Background {
         Paint paint = new Paint();
         paint.setShader(shader);
         canvas.drawRect(new RectF(0, 0, canvas.getWidth(), canvas.getHeight()), paint);
+        canvas.drawBitmap(album, canvas.getWidth() / 20, 30, null);
     }
 
     void DrawButton(Canvas canvas) {

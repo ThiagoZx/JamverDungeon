@@ -20,6 +20,8 @@ public class Controller {
     private Paint paint = new Paint();
     private int posX;
     private int posY;
+    private Matrix mat;
+    private boolean posSet;
 
     public Controller(Bitmap bitmap, int pointing) {
         image = bitmap;
@@ -38,44 +40,49 @@ public class Controller {
         return 0;
     }
 
-    void drawController(Canvas canvas){
+    void setPos(Canvas canvas){
         int canvasWidth = canvas.getWidth();
         int canvasHeight = canvas.getHeight();
-        Matrix mat = new Matrix();
+        posSet = true;
+        mat = new Matrix();
         switch (direction){
             case 0:
-                mat.postRotate(0);
                 posX = (canvasWidth / 2) - image.getWidth() / 2;
                 posY = canvasHeight - image.getHeight();
+                mat.postRotate(0);
                 image = image.copy(image.getConfig(), true);
                 this.changeArrowColor(Color.RED);
-            break;
+                break;
             case 1:
-                mat.postRotate(90);
                 posX = (canvasWidth / 2) - image.getWidth() - image.getWidth() / 2;
                 posY = canvasHeight - image.getHeight();
+                mat.postRotate(90);
                 image = image.copy(image.getConfig(), true);
                 this.changeArrowColor(Color.BLUE);
-            break;
+                break;
             case 2:
-                mat.postRotate(180);
                 posX = (canvasWidth / 2) - image.getWidth() / 2;
                 posY = canvasHeight - image.getHeight() * 2;
+                mat.postRotate(180);
                 image = image.copy(image.getConfig(), true);
                 this.changeArrowColor(Color.GREEN);
-            break;
+                break;
             case 3:
-                mat.postRotate(270);
                 posX = (canvasWidth / 2) + image.getWidth() / 2;
                 posY = canvasHeight - image.getHeight();
+                mat.postRotate(270);
                 image = image.copy(image.getConfig(), true);
                 this.changeArrowColor(Color.YELLOW);
-            break;
-
+                break;
         }
 
         Bitmap rotateImage = Bitmap.createBitmap(image, 0, 0, image.getWidth(), image.getHeight(), mat, true);
-        canvas.drawBitmap(rotateImage, posX, posY, null);
+        image = rotateImage;
+    }
+
+    void drawController(Canvas canvas) {
+        if (!posSet){ this.setPos(canvas); }
+        canvas.drawBitmap(image, posX, posY, null);
     }
 
     void changeArrowColor(int color){

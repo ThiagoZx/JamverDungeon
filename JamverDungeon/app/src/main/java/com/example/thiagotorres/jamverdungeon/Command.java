@@ -4,11 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.graphics.Rect;
 
 /**
- * Created by Thiago on 14/07/2016.
+ * Created by Thiago on 14/07/2016
  */
 public class Command {
 
@@ -16,6 +15,7 @@ public class Command {
     private Bitmap image;
     private int direction;
     private boolean posSet;
+    private Matrix mat;
     public Rect body;
 
     public Command(Bitmap bitmap, int pointing){
@@ -30,52 +30,42 @@ public class Command {
 
     void setPos(Canvas canvas){
         posSet = true;
+        mat = new Matrix();
         posX = canvas.getWidth();
         switch (direction){
             case 0:
                 posY = (canvas.getHeight() / 2) + image.getHeight();
-                break;
-            case 1:
-                posY = (canvas.getHeight() / 2);
-                break;
-            case 2:
-                posY = (canvas.getHeight() / 2) - image.getHeight() * 2;
-                break;
-            case 3:
-                posY = (canvas.getHeight() / 2) - image.getHeight();
-                break;
-
-        }
-    }
-
-    void drawCommand(Canvas canvas) {
-        if (!posSet){ this.setPos(canvas); }
-        Matrix mat = new Matrix();
-        switch (direction){
-            case 0:
                 mat.postRotate(0);
                 image = image.copy(image.getConfig(), true);
                 this.changeArrowColor(Color.RED);
                 break;
             case 1:
+                posY = (canvas.getHeight() / 2);
                 mat.postRotate(90);
                 image = image.copy(image.getConfig(), true);
                 this.changeArrowColor(Color.BLUE);
                 break;
             case 2:
+                posY = (canvas.getHeight() / 2) - image.getHeight() * 2;
                 mat.postRotate(180);
                 image = image.copy(image.getConfig(), true);
                 this.changeArrowColor(Color.GREEN);
                 break;
             case 3:
+                posY = (canvas.getHeight() / 2) - image.getHeight();
                 mat.postRotate(270);
                 image = image.copy(image.getConfig(), true);
                 this.changeArrowColor(Color.YELLOW);
                 break;
-
         }
+
         Bitmap rotateImage = Bitmap.createBitmap(image, 0, 0, image.getWidth(), image.getHeight(), mat, true);
-        canvas.drawBitmap(rotateImage, posX, posY, null);
+        image = rotateImage;
+    }
+
+    void drawCommand(Canvas canvas) {
+        if (!posSet){ this.setPos(canvas); }
+        canvas.drawBitmap(image, posX, posY, null);
     }
 
     void changeArrowColor(int color){
