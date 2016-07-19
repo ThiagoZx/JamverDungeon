@@ -87,7 +87,7 @@ public class SongView extends View implements Runnable {
         commands = new ArrayList<>();
 
         song = MediaPlayer.create(context, R.raw.chickenlegs);
-        //song.start();
+        song.start();
 
         for (int i = 0; i < 4; i++) {
             controllers.add(controllers.size(), new Controller(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), i));

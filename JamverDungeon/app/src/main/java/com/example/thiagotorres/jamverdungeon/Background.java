@@ -15,9 +15,15 @@ import android.graphics.Shader;
  */
 public class Background {
 
+    //Bar Background
+    private boolean barBackgroundSet = false;
+    private Rect[] rects = new Rect[4];
+    private Paint[] paints = new Paint[4];
+
+    //Album
     private boolean albumSizeSet = false;
-    Paint paint;
-    Bitmap album;
+    private Paint paint = new Paint();
+    private Bitmap album;
 
     public Background(Bitmap bitmap){
         album = bitmap;
@@ -45,28 +51,29 @@ public class Background {
         canvas.drawBitmap(album, canvas.getWidth() / 20, canvas.getHeight() / 35, null);
     }
 
+    void setBarBackground(Canvas canvas, Bitmap bitmap){
+        barBackgroundSet = true;
+        for (int i = -2; i < 2; i++) {
+            rects[i + 2] = new Rect(0, (canvas.getHeight() / 2) + (bitmap.getHeight() * i), canvas.getWidth(), (canvas.getHeight() / 2) + bitmap.getHeight() * (i + 1));
+        }
+        paints[0] = new Paint();
+        paints[0].setColor(Color.rgb(244, 100, 100));
+        paints[1] = new Paint();
+        paints[1].setColor(Color.rgb(86, 186, 236));
+        paints[2] = new Paint();
+        paints[2].setColor(Color.rgb(176, 229, 124));
+        paints[3] = new Paint();
+        paints[3].setColor(Color.rgb(255, 236, 148));
+    }
+
     void DrawGridBackground(Canvas canvas, Bitmap bitmap) {
 
-        //Don't get me wrong, I AM going to optimize this function, I just wanted to see it working.
+        if (!barBackgroundSet){ setBarBackground(canvas, bitmap); }
 
-        Rect rect_01 = new Rect(0,(canvas.getHeight() / 2) + bitmap.getHeight(), canvas.getWidth(), (canvas.getHeight() / 2) + bitmap.getHeight() * 2);
-        Rect rect_02 = new Rect(0, (canvas.getHeight() / 2), canvas.getWidth(), (canvas.getHeight() / 2) + bitmap.getHeight());
-        Rect rect_03 = new Rect(0, (canvas.getHeight() / 2) - bitmap.getHeight() * 2, canvas.getWidth(), (canvas.getHeight() / 2) - bitmap.getHeight());
-        Rect rect_04 = new Rect(0, (canvas.getHeight() / 2) - bitmap.getHeight(), canvas.getWidth(), (canvas.getHeight() / 2));
-
-        Paint paint_01 = new Paint();
-        paint_01.setColor(Color.rgb(244, 100, 100));
-        Paint paint_02 = new Paint();
-        paint_02.setColor(Color.rgb(86, 186, 236));
-        Paint paint_03 = new Paint();
-        paint_03.setColor(Color.rgb(176, 229, 124));
-        Paint paint_04 = new Paint();
-        paint_04.setColor(Color.rgb(255, 236, 148));
-
-        canvas.drawRect(rect_01, paint_01);
-        canvas.drawRect(rect_02, paint_02);
-        canvas.drawRect(rect_03, paint_03);
-        canvas.drawRect(rect_04, paint_04);
+        canvas.drawRect(rects[0], paints[2]);
+        canvas.drawRect(rects[1], paints[3]);
+        canvas.drawRect(rects[2], paints[1]);
+        canvas.drawRect(rects[3], paints[0]);
     }
 
     void DrawButton(Canvas canvas) {
