@@ -114,6 +114,7 @@ public class SongView extends View implements Runnable {
         canvasHeight = canvas.getHeight();
         canvasWidth = canvas.getWidth();
         background.DrawBackground(canvas);
+        background.DrawGridBackground(canvas, BitmapFactory.decodeResource(getResources(), R.drawable.arrow));
 
         if (song.isPlaying()){
             sendNote();
