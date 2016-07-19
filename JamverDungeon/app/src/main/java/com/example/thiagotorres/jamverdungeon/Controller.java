@@ -17,10 +17,8 @@ public class Controller {
 
     private Bitmap image;
     private int direction;
-    private Paint paint = new Paint();
     private int posX;
     private int posY;
-    private Matrix mat;
     private boolean posSet;
 
     public Controller(Bitmap bitmap, int pointing) {
@@ -44,7 +42,7 @@ public class Controller {
         int canvasWidth = canvas.getWidth();
         int canvasHeight = canvas.getHeight();
         posSet = true;
-        mat = new Matrix();
+        Matrix mat = new Matrix();
         switch (direction){
             case 0:
                 posX = (canvasWidth / 2) - image.getWidth() / 2;

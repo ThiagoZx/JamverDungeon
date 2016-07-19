@@ -15,7 +15,6 @@ public class Command {
     private Bitmap image;
     private int direction;
     private boolean posSet;
-    private Matrix mat;
     public Rect body;
 
     public Command(Bitmap bitmap, int pointing){
@@ -30,7 +29,7 @@ public class Command {
 
     void setPos(Canvas canvas){
         posSet = true;
-        mat = new Matrix();
+        Matrix mat = new Matrix();
         posX = canvas.getWidth();
         switch (direction){
             case 0:

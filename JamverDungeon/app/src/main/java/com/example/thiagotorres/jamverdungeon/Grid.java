@@ -16,7 +16,6 @@ public class Grid {
     private Bitmap image;
     private int direction;
     private boolean posSet;
-    private Matrix mat;
     public Rect body;
 
     public Grid(Bitmap bitmap, int pointing){
@@ -26,7 +25,7 @@ public class Grid {
 
     void setPos(Canvas canvas){
         posSet = true;
-        mat = new Matrix();
+        Matrix mat = new Matrix();
         posX = canvas.getWidth() / 20;
         switch (direction){
             case 0:
