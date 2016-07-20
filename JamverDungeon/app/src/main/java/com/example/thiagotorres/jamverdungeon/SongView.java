@@ -2,6 +2,7 @@ package com.example.thiagotorres.jamverdungeon;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -9,6 +10,7 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +31,16 @@ public class SongView extends View implements Runnable {
     //Time measure
     long lastTime;
 
+    //Bitmaps
+    Bitmap arrow;
+
     //GameOver button
     Background background = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.chickenlegsart));
     boolean songOver = false;
 
     //Media Stuff
     MediaPlayer song;
+    ProgressBar progress;
 
     //Listas
     List<Controller> controllers;
@@ -68,7 +74,7 @@ public class SongView extends View implements Runnable {
         Random r = new Random();
         int note = r.nextInt(4);
         if (currTime - lastTime > 1000){
-            commands.add(commands.size(), new Command(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), note));
+            commands.add(commands.size(), new Command(arrow, note));
             lastTime = currTime;
         }
     }
@@ -81,17 +87,29 @@ public class SongView extends View implements Runnable {
         }
     }
 
+    void songProgress(Canvas canvas) {
+        progress.setIndeterminate(false);
+        progress.setProgress(song.getCurrentPosition() / song.getDuration());
+        progress.setMax(100);
+        progress.setPadding(canvas.getWidth() / 2, 100, canvas.getWidth() / 2 + 200, 150);
+        progress.setVisibility(VISIBLE);
+        //progress.bringToFront();
+    }
+
     void Start() {
         controllers = new ArrayList<>();
         bar = new ArrayList<>();
         commands = new ArrayList<>();
 
+        arrow = BitmapFactory.decodeResource(getResources(), R.drawable.arrow);
+
         song = MediaPlayer.create(context, R.raw.chickenlegs);
         song.start();
+        progress = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
 
         for (int i = 0; i < 4; i++) {
-            controllers.add(controllers.size(), new Controller(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), i));
-            bar.add(bar.size(), new Grid(BitmapFactory.decodeResource(getResources(), R.drawable.arrow), i));
+            controllers.add(controllers.size(), new Controller(arrow, i));
+            bar.add(bar.size(), new Grid(arrow, i));
         }
     }
 
@@ -114,7 +132,9 @@ public class SongView extends View implements Runnable {
         canvasHeight = canvas.getHeight();
         canvasWidth = canvas.getWidth();
         background.DrawBackground(canvas);
-        background.DrawGridBackground(canvas, BitmapFactory.decodeResource(getResources(), R.drawable.arrow));
+        background.DrawGridBackground(canvas, arrow);
+
+        songProgress(canvas);
 
         if (song.isPlaying()){
             sendNote();
@@ -151,7 +171,7 @@ public class SongView extends View implements Runnable {
                     }
                 }
 
-                if (songOver == true && x > canvasWidth / 2 && x < canvasWidth / 2 + 200 && y > 50 && y < 150){
+                if (songOver && x > canvasWidth / 2 && x < canvasWidth / 2 + 200 && y > 50 && y < 150){
                     gameOver();
                 }
 

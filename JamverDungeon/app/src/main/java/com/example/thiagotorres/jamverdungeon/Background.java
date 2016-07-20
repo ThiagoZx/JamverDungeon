@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.widget.ProgressBar;
 
 /**
  * Created by Thiago on 15/07/2016
@@ -78,7 +79,7 @@ public class Background {
 
     void DrawButton(Canvas canvas) {
         Rect r = new Rect();
-        paint.setColor(Color.LTGRAY);
+        paint.setColor(Color.rgb(52, 73, 94));
         r.set(canvas.getWidth() / 2, 100, canvas.getWidth() / 2 + 200, 150);
         canvas.drawRect(r, paint);
     }
