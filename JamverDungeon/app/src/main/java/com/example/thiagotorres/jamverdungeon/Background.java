@@ -80,7 +80,7 @@ public class Background {
     void DrawButton(Canvas canvas) {
         Rect r = new Rect();
         paint.setColor(Color.rgb(52, 73, 94));
-        r.set(canvas.getWidth() / 2, 100, canvas.getWidth() / 2 + 200, 150);
+        r.set(canvas.getWidth() / 2, 100, canvas.getWidth() - canvas.getWidth() / 20, 150);
         canvas.drawRect(r, paint);
     }
 }
