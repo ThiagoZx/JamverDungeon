@@ -5,12 +5,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,6 @@ public class SongView extends View implements Runnable {
 
     //Media Stuff
     MediaPlayer song;
-    ProgressBar progress;
 
     //Listas
     List<Controller> controllers;
@@ -88,42 +88,18 @@ public class SongView extends View implements Runnable {
     }
 
     void songProgress(Canvas canvas) {
-        progress.setIndeterminate(false);
-        progress.setProgress(song.getCurrentPosition() / song.getDuration());
-        progress.setMax(100);
-        progress.setPadding(canvas.getWidth() / 2, 100, canvas.getWidth() / 2 + 200, 150);
-        progress.setVisibility(VISIBLE);
-        //progress.bringToFront();
-    }
+        Paint progressPaint = new Paint();
 
-    void Start() {
-        controllers = new ArrayList<>();
-        bar = new ArrayList<>();
-        commands = new ArrayList<>();
+        //Draw Background
+        progressPaint.setColor(Color.rgb(211, 84, 0));
+        Rect progressBackground = new Rect((canvas.getWidth() / 2) - 3, (100) - 3, (canvas.getWidth() / 2 + 200) + 3, (150) + 3);
+        canvas.drawRect(progressBackground, progressPaint);
 
-        arrow = BitmapFactory.decodeResource(getResources(), R.drawable.arrow);
-
-        song = MediaPlayer.create(context, R.raw.chickenlegs);
-        song.start();
-        progress = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
-
-        for (int i = 0; i < 4; i++) {
-            controllers.add(controllers.size(), new Controller(arrow, i));
-            bar.add(bar.size(), new Grid(arrow, i));
-        }
-    }
-
-    void Update(){
-        for (int i = 0; i < bar.size(); i++) {
-            bar.get(i).updateGrid();
-        }
-
-        for (int i = 0; i < commands.size(); i++) {
-            commands.get(i).updateCommand();
-            if (commands.get(i).deleteCommand()){
-                commands.remove(i);
-            }
-        }
+        //Draw Progress
+        progressPaint.setColor(Color.rgb(52, 152, 219));
+        float songPosition = (canvas.getWidth() / 2) + 200 * song.getCurrentPosition() / song.getDuration();
+        Rect progress = new Rect(canvas.getWidth() / 2, 100, (int)songPosition, 150);
+        canvas.drawRect(progress, progressPaint);
     }
 
     @Override
@@ -179,6 +155,35 @@ public class SongView extends View implements Runnable {
         }
 
         return true;
+    }
+
+    void Update(){
+        for (int i = 0; i < bar.size(); i++) {
+            bar.get(i).updateGrid();
+        }
+
+        for (int i = 0; i < commands.size(); i++) {
+            commands.get(i).updateCommand();
+            if (commands.get(i).deleteCommand()){
+                commands.remove(i);
+            }
+        }
+    }
+
+    void Start() {
+        controllers = new ArrayList<>();
+        bar = new ArrayList<>();
+        commands = new ArrayList<>();
+
+        arrow = BitmapFactory.decodeResource(getResources(), R.drawable.arrow);
+
+        song = MediaPlayer.create(context, R.raw.chickenlegs);
+        song.start();
+
+        for (int i = 0; i < 4; i++) {
+            controllers.add(controllers.size(), new Controller(arrow, i));
+            bar.add(bar.size(), new Grid(arrow, i));
+        }
     }
 
     @Override
