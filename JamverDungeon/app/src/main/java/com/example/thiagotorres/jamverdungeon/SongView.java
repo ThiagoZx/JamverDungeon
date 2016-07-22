@@ -149,7 +149,7 @@ public class SongView extends View implements Runnable {
                     }
                 }
 
-                if (songOver && x > canvasWidth / 2 && x < canvasWidth / 2 + 200 && y > 50 && y < 150){
+                if (songOver && x > canvasWidth / 2 && x < canvasWidth - canvasWidth / 20 && y > (canvasHeight / 35 * 8) - 50 && y < (canvasHeight / 35 * 8)){
                     gameOver();
                 }
 
@@ -180,7 +180,7 @@ public class SongView extends View implements Runnable {
         arrow = BitmapFactory.decodeResource(getResources(), R.drawable.arrow);
 
         song = MediaPlayer.create(context, R.raw.chickenlegs);
-        song.start();
+        //song.start();
 
         for (int i = 0; i < 4; i++) {
             controllers.add(controllers.size(), new Controller(arrow, i));
