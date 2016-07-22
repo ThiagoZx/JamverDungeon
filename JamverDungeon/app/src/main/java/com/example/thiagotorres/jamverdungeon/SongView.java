@@ -92,13 +92,13 @@ public class SongView extends View implements Runnable {
 
         //Draw Background
         progressPaint.setColor(Color.rgb(16, 16, 16));
-        Rect progressBackground = new Rect((canvas.getWidth() / 2) - 3, ((canvas.getHeight() / 35 * 8) - 50) - 3, (canvas.getWidth() - canvas.getWidth() / 20) + 3, (canvas.getHeight() / 35 * 8) + 3);
+        Rect progressBackground = new Rect((4 * canvas.getWidth() / 10) - 3, ((canvas.getHeight() / 35 * 8) - 50) - 3, (canvas.getWidth() - canvas.getWidth() / 20) + 3, (canvas.getHeight() / 35 * 8) + 3);
         canvas.drawRect(progressBackground, progressPaint);
 
         //Draw Progress
         progressPaint.setColor(Color.rgb(255, 151, 2));
-        float songPosition = (canvas.getWidth() / 2) + (canvas.getWidth() / 2  - canvas.getWidth() / 20) * song.getCurrentPosition() / song.getDuration();
-        Rect progress = new Rect(canvas.getWidth() / 2, (canvas.getHeight() / 35 * 8) - 50, (int)songPosition, canvas.getHeight() / 35 * 8);
+        float songPosition = (4 * canvas.getWidth() / 10) + (6 * canvas.getWidth() / 10  - canvas.getWidth() / 20) * song.getCurrentPosition() / song.getDuration();
+        Rect progress = new Rect(4 * canvas.getWidth() / 10, (canvas.getHeight() / 35 * 8) - 50, (int)songPosition, canvas.getHeight() / 35 * 8);
         canvas.drawRect(progress, progressPaint);
     }
 
@@ -149,7 +149,7 @@ public class SongView extends View implements Runnable {
                     }
                 }
 
-                if (songOver && x > canvasWidth / 2 && x < canvasWidth - canvasWidth / 20 && y > (canvasHeight / 35 * 8) - 50 && y < (canvasHeight / 35 * 8)){
+                if (songOver && x > 4 * canvasWidth / 10 && x < canvasWidth - canvasWidth / 20 && y > (canvasHeight / 35 * 8) - 50 && y < (canvasHeight / 35 * 8)){
                     gameOver();
                 }
 
@@ -180,7 +180,7 @@ public class SongView extends View implements Runnable {
         arrow = BitmapFactory.decodeResource(getResources(), R.drawable.arrow);
 
         song = MediaPlayer.create(context, R.raw.chickenlegs);
-        //song.start();
+        song.start();
 
         for (int i = 0; i < 4; i++) {
             controllers.add(controllers.size(), new Controller(arrow, i));

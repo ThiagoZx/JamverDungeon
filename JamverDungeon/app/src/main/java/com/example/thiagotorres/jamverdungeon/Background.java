@@ -58,11 +58,11 @@ public class Background {
 
     void DrawAuthorName(Canvas canvas) {
         paint.setColor(Color.WHITE);
-        paint.setTextSize(36);
-        canvas.drawText("Chicken Legs", 5 * canvas.getWidth() / 10, (canvas.getHeight() / 35 * 3), paint);
+        paint.setTextSize(40);
+        canvas.drawText("Chicken Legs", 4 * canvas.getWidth() / 10, (canvas.getHeight() / 40 * 4), paint);
 
-        paint.setTextSize(20);
-        canvas.drawText("Thiago do Prado", 5 * canvas.getWidth() / 10, (canvas.getHeight() / 35 * 4), paint);
+        paint.setTextSize(22);
+        canvas.drawText("Thiago do Prado", 4 * canvas.getWidth() / 10, (canvas.getHeight() / 40 * 5), paint);
 
     }
 
@@ -94,10 +94,10 @@ public class Background {
     void DrawButton(Canvas canvas) {
         Rect r = new Rect();
         paint.setColor(Color.rgb(52, 73, 94));
-        r.set(canvas.getWidth() / 2, (canvas.getHeight() / 35 * 8) - 50, canvas.getWidth() - canvas.getWidth() / 20, (canvas.getHeight() / 35 * 8));
+        r.set(4 * canvas.getWidth() / 10, (canvas.getHeight() / 35 * 8) - 50, canvas.getWidth() - canvas.getWidth() / 20, (canvas.getHeight() / 35 * 8));
         canvas.drawRect(r, paint);
         paint.setColor(Color.WHITE);
         paint.setTextSize(36);
-        canvas.drawText("Letra Q!", 6 * canvas.getWidth() / 10, (canvas.getHeight() / 35 * 8) - 10, paint);
+        canvas.drawText("Letra Q!", 11 * canvas.getWidth() / 20, (canvas.getHeight() / 35 * 8) - 10, paint);
     }
 }
