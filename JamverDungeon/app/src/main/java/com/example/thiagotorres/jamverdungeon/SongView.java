@@ -91,14 +91,14 @@ public class SongView extends View implements Runnable {
         Paint progressPaint = new Paint();
 
         //Draw Background
-        progressPaint.setColor(Color.rgb(211, 84, 0));
-        Rect progressBackground = new Rect((canvas.getWidth() / 2) - 3, (100) - 3, (canvas.getWidth() - canvas.getWidth() / 20) + 3, (150) + 3);
+        progressPaint.setColor(Color.rgb(16, 16, 16));
+        Rect progressBackground = new Rect((canvas.getWidth() / 2) - 3, ((canvas.getHeight() / 35 * 8) - 50) - 3, (canvas.getWidth() - canvas.getWidth() / 20) + 3, (canvas.getHeight() / 35 * 8) + 3);
         canvas.drawRect(progressBackground, progressPaint);
 
         //Draw Progress
-        progressPaint.setColor(Color.rgb(52, 152, 219));
+        progressPaint.setColor(Color.rgb(255, 151, 2));
         float songPosition = (canvas.getWidth() / 2) + (canvas.getWidth() / 2  - canvas.getWidth() / 20) * song.getCurrentPosition() / song.getDuration();
-        Rect progress = new Rect(canvas.getWidth() / 2, 100, (int)songPosition, 150);
+        Rect progress = new Rect(canvas.getWidth() / 2, (canvas.getHeight() / 35 * 8) - 50, (int)songPosition, canvas.getHeight() / 35 * 8);
         canvas.drawRect(progress, progressPaint);
     }
 

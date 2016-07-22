@@ -10,6 +10,9 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by Thiago on 15/07/2016
@@ -45,11 +48,16 @@ public class Background {
 
     void DrawBackground(Canvas canvas) {
         if (!albumSizeSet) { album = setAlbumSize(album, canvas.getHeight() / 5, canvas.getWidth() / 3); }
-        Shader shader = new LinearGradient(0, 0, 0, canvas.getHeight() / 4, Color.BLACK, Color.WHITE, Shader.TileMode.CLAMP);
-        Paint paint = new Paint();
-        paint.setShader(shader);
-        canvas.drawRect(new RectF(0, 0, canvas.getWidth(), canvas.getHeight()), paint); // <== Fix this;
+        paint.setColor(Color.rgb(64,64,64));
+        canvas.drawRect(new Rect(0, 0, canvas.getWidth(), canvas.getHeight()), paint);
+
+        paint.setColor(Color.rgb(32, 32, 32));
+        canvas.drawRect(new Rect(canvas.getWidth() / 20 - 10, canvas.getHeight() / 35 - 10, (canvas.getWidth() - canvas.getWidth() / 20) + 13, (canvas.getHeight() / 35 * 8) + 13), paint);
         canvas.drawBitmap(album, canvas.getWidth() / 20, canvas.getHeight() / 35, null);
+    }
+
+    void DrawAuthorName() {
+        
     }
 
     void setBarBackground(Canvas canvas, Bitmap bitmap){
@@ -80,7 +88,10 @@ public class Background {
     void DrawButton(Canvas canvas) {
         Rect r = new Rect();
         paint.setColor(Color.rgb(52, 73, 94));
-        r.set(canvas.getWidth() / 2, 100, canvas.getWidth() - canvas.getWidth() / 20, 150);
+        r.set(canvas.getWidth() / 2, (canvas.getHeight() / 35 * 8) - 50, canvas.getWidth() - canvas.getWidth() / 20, (canvas.getHeight() / 35 * 8));
         canvas.drawRect(r, paint);
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(36);
+        canvas.drawText("Letra Q!", 6 * canvas.getWidth() / 10, (canvas.getHeight() / 35 * 8) - 10, paint);
     }
 }
