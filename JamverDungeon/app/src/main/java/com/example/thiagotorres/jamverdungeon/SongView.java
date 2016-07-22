@@ -31,6 +31,7 @@ public class SongView extends View implements Runnable {
 
     //Time measure
     long lastTime;
+    long startTime;
 
     //Bitmaps
     Bitmap arrow;
@@ -73,7 +74,7 @@ public class SongView extends View implements Runnable {
         long currTime = System.currentTimeMillis();
         Random r = new Random();
         int note = r.nextInt(4);
-        if (currTime - lastTime > 1000){
+        if (currTime - lastTime > 742.89){
             commands.add(commands.size(), new Command(arrow, note));
             lastTime = currTime;
         }
@@ -107,6 +108,7 @@ public class SongView extends View implements Runnable {
 
         canvasHeight = canvas.getHeight();
         canvasWidth = canvas.getWidth();
+
         background.DrawBackground(canvas);
         background.DrawGridBackground(canvas, arrow);
         background.DrawAuthorName(canvas);
@@ -160,6 +162,7 @@ public class SongView extends View implements Runnable {
     }
 
     void Update(){
+
         for (int i = 0; i < bar.size(); i++) {
             bar.get(i).updateGrid();
         }
@@ -180,6 +183,7 @@ public class SongView extends View implements Runnable {
         arrow = BitmapFactory.decodeResource(getResources(), R.drawable.arrow);
 
         song = MediaPlayer.create(context, R.raw.chickenlegs);
+        startTime = System.currentTimeMillis();
         song.start();
 
         for (int i = 0; i < 4; i++) {
