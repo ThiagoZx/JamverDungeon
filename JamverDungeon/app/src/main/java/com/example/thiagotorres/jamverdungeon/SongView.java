@@ -109,8 +109,10 @@ public class SongView extends View implements Runnable {
         canvasWidth = canvas.getWidth();
         background.DrawBackground(canvas);
         background.DrawGridBackground(canvas, arrow);
+        background.DrawAuthorName(canvas);
 
         songProgress(canvas);
+
 
         if (song.isPlaying()){
             sendNote();

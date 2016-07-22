@@ -56,8 +56,14 @@ public class Background {
         canvas.drawBitmap(album, canvas.getWidth() / 20, canvas.getHeight() / 35, null);
     }
 
-    void DrawAuthorName() {
-        
+    void DrawAuthorName(Canvas canvas) {
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(36);
+        canvas.drawText("Chicken Legs", 5 * canvas.getWidth() / 10, (canvas.getHeight() / 35 * 3), paint);
+
+        paint.setTextSize(20);
+        canvas.drawText("Thiago do Prado", 5 * canvas.getWidth() / 10, (canvas.getHeight() / 35 * 4), paint);
+
     }
 
     void setBarBackground(Canvas canvas, Bitmap bitmap){
